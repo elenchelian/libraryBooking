@@ -1,3 +1,5 @@
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self';">
 <?php
 	require "../db_connect.php";
 	require "../message_display.php";
@@ -14,26 +16,26 @@
 	</head>
 	<body>
 		<form class="cd-form" method="POST" action="#">
-		
+
 		<legend>Librarian Login</legend>
-		
+
 			<div class="error-message" id="error-message">
 				<p id="error"></p>
 			</div>
-			
+
 			<div class="icon">
 				<input class="l-user" type="text" name="l_user" placeholder="Username" required />
 			</div>
-			
+
 			<div class="icon">
 				<input class="l-pass" type="password" name="l_pass" placeholder="Password" required />
 			</div>
-			
+
 			<input type="submit" value="Login" name="l_login"/>
-			
+
 		</form>
 	</body>
-	
+
 	<?php
 		if(isset($_POST['l_login']))
 		{
@@ -51,5 +53,5 @@
 			}
 		}
 	?>
-	
+
 </html>
