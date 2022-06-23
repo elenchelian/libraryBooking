@@ -1,5 +1,4 @@
-<meta http-equiv="Content-Security-Policy"
-      content="default-src 'self';">
+
 <?php
 	require "../db_connect.php";
 	require "../message_display.php";
@@ -9,6 +8,8 @@
 
 <html>
 	<head>
+    <!-- <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';"> -->
 		<title>Librarian Login</title>
 		<link rel="stylesheet" type="text/css" href="../css/global_styles.css">
 		<link rel="stylesheet" type="text/css" href="../css/form_styles.css">

@@ -1,5 +1,4 @@
-<meta http-equiv="Content-Security-Policy"
-      content="default-src 'self';">
+
 			<!-- Content-Security-Policy: default-src 'self' -->
 
 <?php
@@ -16,10 +15,16 @@
 
 <html>
 	<head>
+    <!-- <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';"> -->
 		<title>Library</title>
 		<link rel="stylesheet" type="text/css" href="css/index_style.css" />
 	</head>
 	<body>
+		<!-- <script nonce="${nonce}">
+  document.getElementById('things')
+          .addEventListener('click', doThings);
+</script> -->
 		<div id="allTheThings">
 			<div id="member">
 				<a href="member">
