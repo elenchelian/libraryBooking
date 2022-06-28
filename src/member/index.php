@@ -44,7 +44,9 @@
 		if(isset($_POST['m_login']))
 		{
 			$query = $con->prepare("SELECT id, balance FROM member WHERE username = ? AND password = ?;");
-			$query->bind_param("ss", $_POST['m_user'], sha1($_POST['m_pass']));
+			$getuser=$_POST['m_user'];
+			$getpass = sha1($_POST['m_pass']);
+			$query->bind_param("ss", $getuser, $getpass);
 			$query->execute();
 			$result = $query->get_result();
 

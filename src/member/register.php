@@ -12,38 +12,70 @@
 		<link rel="stylesheet" href="css/register_style.css">
 	</head>
 	<body>
-		<form class="cd-form" method="POST" action="#">
+		<form class="cd-form" method="POST"  onsubmit="return CheckPassword()">
 			<legend>Enter your details</legend>
-			
+
 				<div class="error-message" id="error-message">
 					<p id="error"></p>
 				</div>
-				
+
 				<div class="icon">
 					<input class="m-user" type="text" name="m_user" id="m_user" placeholder="Username" required />
 				</div>
-				
+
 				<div class="icon">
-					<input class="m-pass" type="password" name="m_pass" placeholder="Password" required />
+					<input class="m-pass" type="password" name="m_pass" id="m_pass" placeholder="Password" required />
 				</div>
-				
+
 				<div class="icon">
 					<input class="m-name" type="text" name="m_name" placeholder="Full Name" required />
 				</div>
-				
+
 				<div class="icon">
 					<input class="m-email" type="email" name="m_email" id="m_email" placeholder="Email" required />
 				</div>
-				
+
 				<div class="icon">
 					<input class="m-balance" type="number" name="m_balance" id="m_balance" placeholder="Initial Balance" required />
 				</div>
-				
+
 				<br />
 				<input type="submit" name="m_register" value="Register" />
 		</form>
+
+		<script>
+		function CheckPassword()
+		{
+			var passw = document.getElementById('m_pass').value;
+			// var passw2 = document.getElementById('confirm_password').value;
+			var upper  =/[A-Z]/;
+			var number = /[0-9]/;
+
+			if(passw.length < 8 || passw.length > 20 || !number.test(passw) || !upper.test(passw)) {
+				if(passw.length<8){
+					alert("Please make sure password is longer than 8 characters.")
+					return false;
+				}
+				if(passw.length>20){
+					alert("Please make sure password is shorter than 20 characters.")
+					return false;
+				}
+				if(!number.test(passw)){
+					alert("Please make sure password includes a digit")
+					return false;
+				}
+				if(!upper.test(passw)) {
+					alert("Please make sure password includes an uppercase letter.")
+					return false;
+				}
+			}
+			else
+				alert("Password is strong");
+		}
+		</script>
+
 	</body>
-	
+
 	<?php
 		if(isset($_POST['m_register']))
 		{
@@ -59,14 +91,21 @@
 				else
 				{
 					$query = $con->prepare("(SELECT email FROM member WHERE email = ?) UNION (SELECT email FROM pending_registrations WHERE email = ?);");
-					$query->bind_param("ss", $_POST['m_email'], $_POST['m_email']);
+					$getemail = $_POST['m_email'];
+					$query->bind_param("ss", $getemail, $getemail);
 					$query->execute();
 					if(mysqli_num_rows($query->get_result()) != 0)
 						echo error_with_field("An account is already registered with that email", "m_email");
 					else
 					{
 						$query = $con->prepare("INSERT INTO pending_registrations(username, password, name, email, balance) VALUES(?, ?, ?, ?, ?);");
-						$query->bind_param("ssssd", $_POST['m_user'], sha1($_POST['m_pass']), $_POST['m_name'], $_POST['m_email'], $_POST['m_balance']);
+						$getuser=$_POST['m_user'];
+						$getemail = $_POST['m_email'];
+						$getpass=sha1($_POST['m_pass']);
+						$getname=$_POST['m_name'];
+						$getbalance=$_POST['m_balance'];
+
+						$query->bind_param("ssssd",$getuser, $getpass,$getname,$getemail,$getbalance);
 						if($query->execute())
 							echo success("Details recorded. You will be notified on the email ID provided when your details have been verified");
 						else
@@ -76,5 +115,5 @@
 			}
 		}
 	?>
-	
+
 </html>

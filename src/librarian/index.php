@@ -41,7 +41,9 @@
 		if(isset($_POST['l_login']))
 		{
 			$query = $con->prepare("SELECT id FROM librarian WHERE username = ? AND password = ?;");
-			$query->bind_param("ss", $_POST['l_user'], sha1($_POST['l_pass']));
+			$getlib=$_POST['l_user'];
+			$getlibpass = sha1($_POST['l_pass']);
+			$query->bind_param("ss", $getlib, $getlibpass);
 			$query->execute();
 			if(mysqli_num_rows($query->get_result()) != 1)
 				echo error_without_field("Invalid username/password combination");
